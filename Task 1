@@ -1,0 +1,82 @@
+#include <iostream>
+
+#include<string>
+#include<map>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+struct Date {
+ int day;
+ int month;
+ int year;
+};
+
+class BirthdayList {
+private:
+ map<string, Date> birthdays;
+
+public:
+ void addBirthday(string name, int day, int month, int year) {
+ birthdays[name] = { day, month, year };
+ }
+
+ void editBirthday(string name, int day, int month, int year) {
+ birthdays[name] = { day, month, year };
+ }
+
+ void displayBirthday(string name) {
+ auto birthday = birthdays.find(name);
+ if (birthday == birthdays.end()) {
+ cout << "No birthday found for " << name << endl;
+ }
+ else {
+ cout << name << "'s birthday is on date " << birthday->second.day << "/" << birthday->second.month << "/" << birthday->second.year << endl;
+ }
+ }
+
+ void displayMonthlyBirthdays(int month) {
+ cout << "Birthdays in the month " << month << ":" << endl;
+ vector<string> names;
+ for (auto birthday : birthdays) {
+ if (birthday.second.month == month) {
+ names.push_back(birthday.first);
+ }
+ }
+ sort(names.begin(), names.end());
+ for (auto name : names) {
+ cout << name << endl;
+ }
+ }
+
+ void searchBirthday(string name) {
+ auto birthday = birthdays.find(name);
+ if (birthday == birthdays.end()) {
+ cout << "No birthday found for " << name << endl;
+ }
+ else {
+ cout << name << "'s birthday is on date " << birthday->second.day << "/" << birthday->second.month << "/" << birthday->second.year << endl;
+ }
+ }
+};
+
+int main() {
+ BirthdayList list;
+
+ list.addBirthday("Shoubh", 6, 6, 2002);
+ list.addBirthday("Aish", 19, 5, 2002);
+ list.addBirthday("Adi", 22, 11, 2004);
+ list.addBirthday("Aara", 19, 10, 2012);
+ list.addBirthday("Surya", 14, 6, 2017);
+
+ list.displayBirthday("Shoubh");
+ list.displayBirthday("Aish");
+ list.displayBirthday("Surya");
+ list.displayMonthlyBirthdays(6);
+
+ list.searchBirthday("Sakshi");
+
+
+ return 0;
+}
